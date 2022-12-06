@@ -8,8 +8,8 @@
 <body>
 <br/>
 <h3>file 업로드하기</h3>
-    <form action="multi-file" method="post" encType="multipart/form-data">
-        파일 : <input type="file" name="multiFiles" multiple><br>
+    <form action="/insert" method="post" encType="multipart/form-data">
+        파일 : <input type="file" name="dbfile" accept=".dbfile"/><br>
         <input type="submit">
     </form>
 
@@ -20,17 +20,17 @@
 <%--            <th width="100px">비밀번호</th>--%>
 <%--            <th width="100px">이름</th>--%>
 <%--            <th>레벨</th>--%>
-<%--            <th width="100px">??</th>--%>
+<%--            <th width="100px">상태</th>--%>
 <%--            <th width="100px">날짜</th>--%>
 <%--        </tr>--%>
-<%--        <c:forEach items="${ user }" var="userList">--%>
+<%--        <c:forEach items="${ userList }" var="userList">--%>
 <%--            <tr>--%>
-<%--                <td><c:out value="${ user.id }"/></td>--%>
-<%--                <td><c:out value="${ user.pwd }"/></td>--%>
-<%--                <td><c:out value="${ user.name }"/></td>--%>
-<%--                <td><c:out value="${ user.level }"/></td>--%>
-<%--                <td><c:out value="${ user.description }"/></td>--%>
-<%--                <td><c:out value="${ user.reg_date }"/></td>--%>
+<%--                <td><c:out value="${ userList.id }"/></td>--%>
+<%--                <td><c:out value="${ userList.pwd }"/></td>--%>
+<%--                <td><c:out value="${ userList.name }"/></td>--%>
+<%--                <td><c:out value="${ userList.level }"/></td>--%>
+<%--                <td><c:out value="${ userList.description }"/></td>--%>
+<%--                <td><c:out value="${ userList.reg_date }"/></td>--%>
 <%--            </tr>--%>
 <%--        </c:forEach>--%>
 <%--    </table>--%>

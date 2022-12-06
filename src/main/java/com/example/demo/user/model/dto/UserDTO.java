@@ -1,19 +1,20 @@
 package com.example.demo.user.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserDTO {
 
     private String id;
     private String pwd;
     private String name;
-    private String level;
+    private char level;
     private String description;
-    private java.sql.Date reg_date;
+    private Timestamp reg_date;
 
     public UserDTO() {}
 
-    public UserDTO(String id, String pwd, String name, String level, String description, Date reg_date) {
+    public UserDTO(String id, String pwd, String name, char level, String description, Timestamp reg_date) {
         this.id = id;
         this.pwd = pwd;
         this.name = name;
@@ -46,11 +47,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String getLevel() {
+    public char getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(char level) {
         this.level = level;
     }
 
@@ -62,11 +63,11 @@ public class UserDTO {
         this.description = description;
     }
 
-    public Date getReg_date() {
+    public Timestamp getReg_date() {
         return reg_date;
     }
 
-    public void setReg_date(Date reg_date) {
+    public void setReg_date(Timestamp reg_date) {
         this.reg_date = reg_date;
     }
 
@@ -76,7 +77,7 @@ public class UserDTO {
                 "id='" + id + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", name='" + name + '\'' +
-                ", level='" + level + '\'' +
+                ", level=" + level +
                 ", description='" + description + '\'' +
                 ", reg_date=" + reg_date +
                 '}';

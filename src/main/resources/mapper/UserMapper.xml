@@ -17,6 +17,6 @@
     <select id="selectUserList" resultMap="userResultMap">
         SELECT
                *
-          FROM "t_user"
+          FROM T_USER
     </select>
 </mapper>
