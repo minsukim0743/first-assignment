@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -43,13 +45,15 @@ public class HomeController {
         List<UserDTO> userList = userService.selectUserList();
         System.out.println("userList 확인 : " + userList);
 
-        response.setCharacterEncoding("UTF-8");
-
         return gson.toJson(userList);
     }
 
     @PostMapping("/insert")
-    public String insertUser(@RequestParam MultipartFile dbfile){
+    public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
+
+            Map<Integer, String> file = userService.insertUserList(dbFile);
+
+            rttr.addFlashAttribute("file", file);
 
         return "redirect:/";
     }

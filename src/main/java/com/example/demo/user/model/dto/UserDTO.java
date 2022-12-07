@@ -1,5 +1,6 @@
 package com.example.demo.user.model.dto;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class UserDTO {
@@ -13,6 +14,15 @@ public class UserDTO {
 
     public UserDTO() {}
 
+    public UserDTO(String[] array) {
+
+        this.id = array[0];
+        this.pwd = array[1];
+        this.name = array[2];
+        this.level = array[3].charAt(0);
+        this.description = array[4];
+        this.reg_date = Timestamp.valueOf(array[5]);
+    }
     public UserDTO(String id, String pwd, String name, char level, String description, Timestamp reg_date) {
         this.id = id;
         this.pwd = pwd;

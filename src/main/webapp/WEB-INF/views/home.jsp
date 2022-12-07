@@ -6,26 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Home</title>
 
+    <link rel="stylesheet" type="text/css" href="../../resources/css/home.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
-<style>
-
-    th{
-        width: 100px;
-        text-align: center;
-    }
-
-    tr{
-        width: 100px;
-        text-align: center;
-    }
-</style>
 <body>
 <br/>
 <h3>file 업로드하기</h3>
-    <form action="/insert" method="post" encType="multipart/form-data" onsubmit="return _onSubmit()">
-        파일 : <input type="file" name="dbfile" id="dbfile" accept=".dbfile" onchange="checkFile(this)"/><br>
-        <input type="submit">
+    <form action="/insert" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
+        파일 : <input type="file" name="dbFile" id="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
+        <button type="submit">전송</button>
     </form>
 
 <button id="json">정보 조회하기</button>
@@ -113,9 +102,9 @@
     });
 
     // 업로드 파일 null 경우 alert
-    function _onSubmit(){
+    function onSubmit(){
 
-        if($("#dbfile").val() == "" || $("#dbfile").val() == null){
+        if($("#dbFile").val() == "" || $("#dbFile").val() == null){
             alert("파일을 업로드해주세요.");
             return false;
         }
@@ -130,7 +119,7 @@
         var file = f.files;
 
         // 정규식으로 확장자 체크
-        if(!/\.(dbflie)$/i.test(file[1].name)) alert('dbflie 파일만 선택해 주세요.\n\n 현재 파일 : ' + file[1].name);
+        if(!/\.(dbFile)$/i.test(file[1].name)) alert('dbflie 파일만 선택해 주세요.\n\n 현재 파일 : ' + file[1].name);
 
         // 체크를 통과했다면 종료.
         else return;

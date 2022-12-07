@@ -22,7 +22,7 @@
     </select>
 
     <!-- 유저 등록 -->
-    <insert id="insertUser">
+    <insert id="insertUserList">
         INSERT
           INTO T_USER
         (
@@ -38,6 +38,7 @@
         , #{ id }
         , #{ pwd }
         , #{ name }
+        , #{ level }
         , #{ description }
         , #{ reg_date }
         )
