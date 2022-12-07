@@ -48,6 +48,7 @@
 
 <script type="text/javascript">
 
+    // userList ajax 서버 요청
     $("#json").click(function(){
 
         $.ajax({
@@ -92,17 +93,18 @@
         });
     });
 
+    // 업로드 파일 null 경우 alert
     function _onSubmit(){
 
-        if($("#dbfile").val() == ""){
+        if($("#dbfile").val() == "" || $("#dbfile").val() == null){
             alert("파일을 업로드해주세요.");
-            $("#dbfile").focus();
             return false;
         }
 
         return true;
     }
 
+    // 파일 확장자 체크
     function checkFile(f){
 
         // files 로 해당 파일 정보 얻기.
@@ -114,7 +116,7 @@
         // 체크를 통과했다면 종료.
         else return;
 
-        // 체크에 걸리면 선택된 내용 취소 처리를 해야함.
+        // 오류 시 파일 초기화
         f.outerHTML = f.outerHTML;
     }
 

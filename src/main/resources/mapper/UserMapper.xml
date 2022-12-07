@@ -14,12 +14,14 @@
         <result property="reg_date" column="REG_DATE"/>
     </resultMap>
 
+    <!-- 유저 리스트 조회 -->
     <select id="selectUserList" resultMap="userResultMap">
         SELECT
                *
           FROM T_USER
     </select>
 
+    <!-- 유저 등록 -->
     <insert id="insertUser">
         INSERT
           INTO T_USER

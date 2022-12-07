@@ -22,7 +22,6 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <!-- 한글 처리 -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
