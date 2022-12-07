@@ -30,6 +30,25 @@
 
 <button id="json">정보 조회하기</button>
 
+<div class="table-count">
+    <table align="center">
+        <thead>
+            <tr>
+                <th>성공</th>
+                <th>실패</th>
+                <th>실패 라인번호</th>
+                <th>실패 텍스트</th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
 <div class="table-area">
     <table align="center" id="listArea">
         <thead>
