@@ -13,7 +13,14 @@
         <beans:property name="contentType" value="text/html; charset=UTF-8" />
     </beans:bean>
 
-    <annotation-driven />
     <context:component-scan base-package="com.example.demo" />
+
+    <annotation-driven />
+
+    <!-- 파일 업로드를 위한 빈 설정 -->
+    <beans:bean id="multipartResolver"
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="10000000"/>
+    </beans:bean>
 
 </beans:beans>

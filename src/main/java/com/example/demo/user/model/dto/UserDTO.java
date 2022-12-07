@@ -1,6 +1,5 @@
 package com.example.demo.user.model.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class UserDTO {
