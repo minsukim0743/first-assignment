@@ -14,7 +14,7 @@
 <h3>file 업로드하기</h3>
     <form action="/insert" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
         파일 : <input type="file" name="dbFile" id="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
-        <button type="submit">전송</button>
+        <button type="submit" id="button-file">전송</button>
     </form>
 
 <button id="json">정보 조회하기</button>
@@ -22,23 +22,38 @@
 <div class="table-count">
     <table align="center">
         <thead>
-            <tr>
-                <th>성공</th>
-                <th>실패</th>
-                <th>실패 라인번호</th>
-                <th>실패 텍스트</th>
-            </tr>
+        <tr>
+            <th>성공 건수</th>
+            <th>실패 건수</th>
+        </tr>
         </thead>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><c:out value="${ successCount }"/> 건</td>
+            <td><c:out value="${ failCount }"/> 건</td>
         </tr>
     </table>
 </div>
 
-<div class="table-area">
+<div class="table-userFailInfo">
+    <table align="center">
+        <thead>
+        <tr>
+            <th>실패 라인</th>
+            <th>실패 텍스트</th>
+        </tr>
+        </thead>
+        <c:if test="${ failCount != 0 }">
+        <c:forEach items="${ file }" var="file">
+        <tr>
+            <td><c:out value="${ file }"/></td>
+            <td></td>
+        </tr>
+        </c:forEach>
+        </c:if>
+    </table>
+</div>
+
+<div class="table-userList">
     <table align="center" id="listArea">
         <thead>
             <tr>
@@ -55,6 +70,27 @@
 </div>
 
 <script type="text/javascript">
+
+    let file = '${file}';
+    let failCount = '${failCount}';
+    let tableCount = $('.table-count');
+    let tableUserFailInfo = $('.table-userFailInfo');
+    let tableUserList = $('.table-userList');
+
+    if(failCount =! 0){
+
+        tableCount.css("display", "block");
+        tableUserFailInfo.css("display", "block");
+        tableUserList.css("display", "block");
+    }
+
+
+    // $("#button-file").click(function(){
+    //
+    //     tableCount.css("display", "block");
+    //     tableUserFailInfo.css("display", "block");
+    //     tableUserList.css("display", "block");
+    // });
 
     // userList ajax 서버 요청
     $("#json").click(function(){
@@ -119,15 +155,13 @@
         var file = f.files;
 
         // 정규식으로 확장자 체크
-        if(!/\.(dbFile)$/i.test(file[1].name)) alert('dbflie 파일만 선택해 주세요.\n\n 현재 파일 : ' + file[1].name);
+        if(!/\.(dbfile)$/i.test(file[0].name)) alert('dbfile 확장자만 업로드가 가능합니다.');
 
-        // 체크를 통과했다면 종료.
         else return;
 
-        // 오류 시 파일 초기화
+        // dbfile 확장자가 아니면 업로드 파일 초기화
         f.outerHTML = f.outerHTML;
     }
-
 </script>
 </body>
 </html>

@@ -35,7 +35,7 @@
         )
         VALUES
         (
-        , #{ id }
+          #{ id }
         , #{ pwd }
         , #{ name }
         , #{ level }

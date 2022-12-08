@@ -35,34 +35,30 @@ public class UserService implements UserServiceImpl{
     @Override
     public Map<Integer, String> insertUserList(MultipartFile dbFile) throws IOException {
 
-        Map<Integer, String> failMap = new HashMap<>();
-        InputStream inputStream = dbFile.getInputStream();
-        AtomicInteger atomic = new AtomicInteger();
+        Map<Integer, String> fail = new HashMap<>();
+        InputStream file = dbFile.getInputStream();
 
         this.successCount = 0;
         this.failCount = 0;
 
-        new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(userInfo -> {
+        new BufferedReader(new InputStreamReader(file)).lines().forEach(userInfo -> {
             UserDTO user = new UserDTO(userInfo.split("/"));
 
             try {
+
                 userMapper.insertUserList(user);
-                System.out.println("success: " + user);
                 successCount++;
 
-                System.out.println("successCount: " + successCount);
             }
             catch(Exception e) {
 
-                failMap.put(atomic.getAndIncrement(), userInfo);
-                System.out.println("fail: " + user);
+                fail.put(failCount, userInfo);
                 failCount++;
 
-                System.out.println("failCount: " + failCount);
             }
         });
 
-        return successCount == atomic.intValue() ? null : failMap;
+        return successCount == failCount ? null : fail;
     }
 
 }
