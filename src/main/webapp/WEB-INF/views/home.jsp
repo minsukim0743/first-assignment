@@ -6,91 +6,124 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Home</title>
 
+    <link rel="stylesheet" type="text/css" href="../../resources/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../../resources/css/home.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
-<br/>
-<h3>file 업로드하기</h3>
-    <form action="/insert" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
-        파일 : <input type="file" name="dbFile" id="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
-        <button type="submit" id="button-file">전송</button>
-    </form>
+    <div class="form">
+        <div class="assignment-form">
 
-<button id="json">정보 조회하기</button>
+            <h1>1차 과제</h1>
 
-<div class="table-count">
-    <table align="center">
-        <thead>
-        <tr>
-            <th>성공 건수</th>
-            <th>실패 건수</th>
-        </tr>
-        </thead>
-        <tr>
-            <td><c:out value="${ successCount }"/> 건</td>
-            <td><c:out value="${ failCount }"/> 건</td>
-        </tr>
-    </table>
-</div>
+            <form action="/insert" id="file-form" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
+                <input type="file" name="dbFile" id="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
+                <button type="submit" id="button-file">전송</button>
+            </form>
 
-<div class="table-userFailInfo">
-    <table align="center">
-        <thead>
-        <tr>
-            <th>실패 라인</th>
-            <th>실패 텍스트</th>
-        </tr>
-        </thead>
-        <c:if test="${ failCount != 0 }">
-        <c:forEach items="${ file }" var="file">
-        <tr>
-            <td><c:out value="${ file }"/></td>
-            <td></td>
-        </tr>
-        </c:forEach>
-        </c:if>
-    </table>
-</div>
+            <div class="table-count">
+                <table align="center">
+                    <thead>
+                    <tr>
+                        <th>성공 건수</th>
+                        <th>실패 건수</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td style="padding: 15px 0px 15px 0px"><c:out value="${ successCount }"/> 건</td>
+                        <td style="padding: 15px 0px 15px 0px"><c:out value="${ failCount }"/> 건</td>
+                    </tr>
+                </table>
+            </div>
 
-<div class="table-userList">
-    <table align="center" id="listArea">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>PWD</th>
-                <th>NAME</th>
-                <th>LEVEL</th>
-                <th width="100px">DESC</th>
-                <th width="100px">REG_DATE</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+            <div class="table-userFailInfo">
+                <table align="center" id="failArea">
+                    <thead>
+                    <tr>
+                        <th>실패 라인</th>
+                        <th>실패 텍스트</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
+            <div class="table-userList">
+                <table align="center" id="listArea">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PWD</th>
+                        <th>NAME</th>
+                        <th>LEVEL</th>
+                        <th width="100px">DESC</th>
+                        <th width="100px">REG_DATE</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <button id="json">정보 조회하기</button>
+            <button id="back" onclick="location.href='/'">뒤로가기</button>
+        </div>
+    </div>
 <script type="text/javascript">
 
-    let file = '${file}';
-    let failCount = '${failCount}';
-    let tableCount = $('.table-count');
-    let tableUserFailInfo = $('.table-userFailInfo');
-    let tableUserList = $('.table-userList');
+    const file = '${file}';
+    const failCount = '${failCount}';
+    const ajaxButton = $("#json");
+    const listArea = $("#listArea");
+    const tableCount = $(".table-count");
+    const tableUserFailInto = $(".table-userFailInfo");
+    const tableUserList = $(".table-userList");
+    const fileForm = $("#file-form");
+    const back = $("#back");
 
-    if(failCount =! 0){
+    tableCount.css("display", "none");
+    tableUserFailInto.css("display", "none");
+    tableUserList.css("display", "none");
+    ajaxButton.css("display", "none");
+    back.css("display", "none");
 
-        tableCount.css("display", "block");
-        tableUserFailInfo.css("display", "block");
-        tableUserList.css("display", "block");
+    if(file.length > 0 && file !== null){
+
+        if(failCount != 0){
+
+            tableCount.css("display", "block");
+            tableUserFailInto.css("display", "block");
+            back.css("display", "block");
+            fileForm.css("display", "none")
+
+            let $table = $("#failArea tbody");
+            $table.html("");
+
+            const userList = file.replace("{", "").replace("}", "").split(", ");
+
+            for(let idx in userList){
+
+                let user = userList[idx].split("=");
+
+                let $tr = $("<tr>");
+
+                let $lineNumber = $("<td>").text(user[0]);
+                let $userInfo = $("<td>").text(user[1]);
+
+                $tr.append($lineNumber);
+                $tr.append($userInfo);
+
+                $table.append($tr);
+
+            }
+        } else {
+
+            fileForm.css("display", "none")
+            tableCount.css("display", "block");
+            ajaxButton.css("display", "block");
+            back.css("display", "block");
+
+        }
     }
-
-
-    // $("#button-file").click(function(){
-    //
-    //     tableCount.css("display", "block");
-    //     tableUserFailInfo.css("display", "block");
-    //     tableUserList.css("display", "block");
-    // });
 
     // userList ajax 서버 요청
     $("#json").click(function(){
@@ -105,6 +138,7 @@
 
                 let userList = JSON.parse(data);
                 console.log(userList);
+                tableUserList.css("display", "block");
 
                 let $table = $("#listArea tbody");
                 $table.html("");
@@ -127,6 +161,7 @@
                     $tr.append($reg_date);
 
                     $table.append($tr);
+
                 }
             },
 

@@ -1,14 +1,57 @@
-/*.table-count, .table-userFailInfo, .table-userList{*/
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
 
-/*    display: none;*/
-/*}*/
+.form {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #f3f2f1;
+    position: relative;
+}
 
-th{
-    width: 100px;
+.form .assignment-form {
+    max-width: 600px;
+    width: 90%;
+    max-height: 90%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0 0 30px rgba(200,200,200,0.4);
+    padding: 50px 40px;
+}
+
+.form h1 {
+    font-size: 40px;
+    font-weight: 200;
+    letter-spacing: 10px;
+    padding: 0px 0px 40px 175px;
+}
+
+#button-file, #json {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px 0;
+    background-color: #2b333f;
+    border: 1px solid #2b333f;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 2px;
+    transition: all .3s;
+}
+
+#button-file:hover, #json:hover {
+    background-color: #fff;
+    color: #2b333f;
+}
+
+td, tr{
     text-align: center;
 }
 
-tr{
-    width: 100px;
-    text-align: center;
+#dbFile {
+    padding: 0 0 20px 220px;
+}
+
+#back {
+    padding: 30px 0 0 468px;
 }
