@@ -11,5 +11,6 @@ public interface UserMapper {
     // userList 조회
     List<UserDTO> selectUserList();
 
+    // user 등록
     void insertUserList(UserDTO user);
 }

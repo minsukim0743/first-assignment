@@ -8,7 +8,7 @@
 
     <resources mapping="/resources/**" location="/resources/" />
 
-    <!-- View prefix, suffix 지정 @Controller에서 View 리턴시 적용-->
+    <!-- View prefix, suffix 지정 @Controller 에서 View 리턴시 적용-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".jsp" />

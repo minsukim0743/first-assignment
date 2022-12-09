@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +55,7 @@ public class HomeController {
 
         // 업로드 파일 Service에 전달
         Map<Integer, String> file = userService.insertUserList(dbFile);
+        System.out.println("file : " + file);
 
         // successCount, failCount 값 넘겨주기
         rttr.addFlashAttribute("successCount", userService.successCount);

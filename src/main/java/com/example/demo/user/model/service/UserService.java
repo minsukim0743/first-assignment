@@ -35,6 +35,7 @@ public class UserService implements UserServiceImpl{
         return userList;
     }
 
+    // userList DB Insert 메소드
     @Override
     @Transactional
     public Map<Integer, String> insertUserList(MultipartFile dbFile) throws IOException {
@@ -43,7 +44,7 @@ public class UserService implements UserServiceImpl{
         Map<Integer, String> fail = new HashMap<>();
         // 업로드 된 파일 읽기 위해 InputStream 안에 담기
         InputStream file = dbFile.getInputStream();
-        // 라인번호 이력 남기기 위하여 AtomicInteger 사용
+        // 라인번호 이력 남기기 위하여 AtomicInteger 사용 초기번호 1 설정
         AtomicInteger lineNumber = new AtomicInteger(1);
 
         // DB Insert 성공 실패 카운트 Controller에서 사용할 수 있게 전역변수로 생성
@@ -63,7 +64,6 @@ public class UserService implements UserServiceImpl{
             }
             catch(Exception e) {
 
-                e.printStackTrace();
                 // 실패시 user 정보를 fail 에 담음
                 fail.put(lineNumber.get(), userInfo);
                 // 실패시 count + 1

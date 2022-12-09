@@ -28,11 +28,10 @@
                         <th>Success</th>
                         <th>Fail</th>
                     </tr>
-
                     </thead>
                     <tr>
-                        <td style="padding: 15px 0px 15px 0px"><c:out value="${ successCount }"/> 건</td>
-                        <td style="padding: 15px 0px 15px 0px"><c:out value="${ failCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ successCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ failCount }"/> 건</td>
                     </tr>
                 </table>
             </div>
@@ -65,7 +64,7 @@
                 </table>
             </div>
 
-            <button id="json" class="btn-json">정보 조회하기</button>
+            <button id="json" class="btn-json">조회하기</button>
             <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
         </div>
     </div>
@@ -176,6 +175,7 @@
     function onSubmit(){
 
         if($(".dbFile").val() === ""){
+
             alert("파일을 업로드해주세요.");
             return false;
         }
@@ -190,9 +190,13 @@
         var file = f.files;
 
         // 정규식으로 확장자 체크
-        if(!/\.(dbfile)$/i.test(file[0].name)) alert('dbfile 확장자만 업로드가 가능합니다.');
+        if(!/\.(dbfile)$/i.test(file[0].name)) {
 
-        else return;
+            alert('dbfile 확장자만 업로드가 가능합니다.');
+        } else {
+
+            return;
+        }
 
         // dbfile 확장자가 아니면 업로드 파일 초기화
         f.outerHTML = f.outerHTML;
