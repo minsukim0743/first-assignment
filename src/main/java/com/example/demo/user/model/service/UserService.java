@@ -43,6 +43,8 @@ public class UserService implements UserServiceImpl{
         Map<Integer, String> fail = new HashMap<>();
         // 업로드 된 파일 읽기 위해 InputStream 안에 담기
         InputStream file = dbFile.getInputStream();
+        // 라인번호 이력 남기기 위하여 AtomicInteger 사용
+        AtomicInteger lineNumber = new AtomicInteger(1);
 
         // DB Insert 성공 실패 카운트 Controller에서 사용할 수 있게 전역변수로 생성
         this.successCount = 0;
@@ -63,13 +65,19 @@ public class UserService implements UserServiceImpl{
 
                 e.printStackTrace();
                 // 실패시 user 정보를 fail 에 담음
-                fail.put(failCount, userInfo);
+                fail.put(lineNumber.get(), userInfo);
                 // 실패시 count + 1
                 failCount++;
             }
+            finally {
+
+                // 메소드 끝날때 현재 값 리턴하고 변수에 + 1
+                lineNumber.getAndIncrement();
+            }
         });
 
-        return successCount == failCount ? null : fail;
+        // successCount(int) lineNumber(Integer) 여서 .intValue() 을 사용하여 int로 parsing
+        return successCount == lineNumber.intValue() ? null : fail;
     }
 
 }

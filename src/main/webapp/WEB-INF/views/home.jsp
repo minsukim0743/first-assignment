@@ -28,6 +28,7 @@
                         <th>Success</th>
                         <th>Fail</th>
                     </tr>
+
                     </thead>
                     <tr>
                         <td style="padding: 15px 0px 15px 0px"><c:out value="${ successCount }"/> 건</td>
