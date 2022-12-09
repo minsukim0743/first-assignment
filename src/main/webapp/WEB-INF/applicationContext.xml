@@ -5,25 +5,31 @@
        xmlns:beans="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
-    <!-- DB -->
+    <!-- DB 정보-->
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:/jdbc.properties" />
+        <property name="locations" value="classpath:datasource.properties" />
         <property name="fileEncoding" value="UTF-8" />
     </bean>
 
+    <!-- DB 연결 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
+        <property name="driverClassName" value="${datasource.driverClassName}" />
+        <property name="url" value="${datasource.url}" />
+        <property name="username" value="${datasource.username}" />
+        <property name="password" value="${datasource.password}" />
     </bean>
 
-    <bean id="sqlSessionFactory"
-          class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!-- DB 연결 SQL 실행에 대한 모든것을 가진 가장 중요한 객체
+        DataSource 를 참조하여 Mybatis 와 sql 서버를 연동 시켜줌 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath*:mapper/*.xml" />
+        <property name="mapperLocations" value="classpath*:mapper/*.xml" /> <!-- 매퍼 위치 설정 -->
     </bean>
+
+    <!-- SqlSessionTemplate -->
+    <!-- 세션을 한번 생성하면 매핑구문을 실행하거나 커밋 또는 롤백을 하기 위해 세션을 사용가능
+            더 이상 필요하지 않은 상태가 되면 세션을 닫는다.-->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
@@ -35,5 +41,6 @@
         <beans:property name="maxInMemorySize" value="100000000" />
     </beans:bean>
 
+    <!-- 지정된 패키지의 모든 Mybatis관련 어노테이션을 찾아 처리함. -->
     <mybatis-spring:scan base-package="com.example.demo.user.model.dao"/>
 </beans>

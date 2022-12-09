@@ -16,17 +16,17 @@
 
             <h1>1차 과제</h1>
 
-            <form action="/insert" id="file-form" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
-                <input type="file" name="dbFile" id="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
-                <button type="submit" id="button-file">전송</button>
+            <form action="/insert" class="file-form" id="file-form" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
+                <input type="file" name="dbFile" class="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
+                <button type="submit" class="btn-file">Submit</button>
             </form>
 
             <div class="table-count">
                 <table align="center">
                     <thead>
                     <tr>
-                        <th>성공 건수</th>
-                        <th>실패 건수</th>
+                        <th>Success</th>
+                        <th>Fail</th>
                     </tr>
                     </thead>
                     <tr>
@@ -40,8 +40,8 @@
                 <table align="center" id="failArea">
                     <thead>
                     <tr>
-                        <th>실패 라인</th>
-                        <th>실패 텍스트</th>
+                        <th>Fail Line</th>
+                        <th>Fail Text</th>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="table-userList">
-                <table align="center" id="listArea">
+                <table align="center" id="listArea" class="listArea">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -64,21 +64,21 @@
                 </table>
             </div>
 
-            <button id="json">정보 조회하기</button>
-            <button id="back" onclick="location.href='/'">뒤로가기</button>
+            <button id="json" class="btn-json">정보 조회하기</button>
+            <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
         </div>
     </div>
 <script type="text/javascript">
 
     const file = '${file}';
     const failCount = '${failCount}';
-    const ajaxButton = $("#json");
-    const listArea = $("#listArea");
+    const ajaxButton = $(".btn-json");
+    const listArea = $(".listArea");
     const tableCount = $(".table-count");
     const tableUserFailInto = $(".table-userFailInfo");
     const tableUserList = $(".table-userList");
-    const fileForm = $("#file-form");
-    const back = $("#back");
+    const fileForm = $(".file-form");
+    const back = $(".btn-back");
 
     tableCount.css("display", "none");
     tableUserFailInto.css("display", "none");
@@ -95,8 +95,8 @@
             back.css("display", "block");
             fileForm.css("display", "none")
 
-            let $table = $("#failArea tbody");
-            $table.html("");
+            let table = $("#failArea tbody");
+            table.html("");
 
             const userList = file.replace("{", "").replace("}", "").split(", ");
 
@@ -104,15 +104,15 @@
 
                 let user = userList[idx].split("=");
 
-                let $tr = $("<tr>");
+                let tr = $("<tr>");
 
-                let $lineNumber = $("<td>").text(user[0]);
-                let $userInfo = $("<td>").text(user[1]);
+                let lineNumber = $("<td>").text(user[0]);
+                let userInfo = $("<td>").text(user[1]);
 
-                $tr.append($lineNumber);
-                $tr.append($userInfo);
+                tr.append(lineNumber);
+                tr.append(userInfo);
 
-                $table.append($tr);
+                table.append(tr);
 
             }
         } else {
@@ -121,12 +121,11 @@
             tableCount.css("display", "block");
             ajaxButton.css("display", "block");
             back.css("display", "block");
-
         }
     }
 
     // userList ajax 서버 요청
-    $("#json").click(function(){
+    $(ajaxButton).click(function(){
 
         $.ajax({
 
@@ -140,27 +139,27 @@
                 console.log(userList);
                 tableUserList.css("display", "block");
 
-                let $table = $("#listArea tbody");
-                $table.html("");
+                let table = $("#listArea tbody");
+                table.html("");
 
                 for(let idx in userList){
 
-                    let $tr = $("<tr>");
-                    let $id = $("<td>").text(userList[idx].id);
-                    let $pwd = $("<td>").text(userList[idx].pwd);
-                    let $name = $("<td>").text(userList[idx].name);
-                    let $level = $("<td>").text(userList[idx].level);
-                    let $description = $("<td>").text(userList[idx].description);
-                    let $reg_date = $("<td>").text(userList[idx].reg_date);
+                    let tr = $("<tr>");
+                    let id = $("<td>").text(userList[idx].id);
+                    let pwd = $("<td>").text(userList[idx].pwd);
+                    let name = $("<td>").text(userList[idx].name);
+                    let level = $("<td>").text(userList[idx].level);
+                    let description = $("<td>").text(userList[idx].description);
+                    let reg_date = $("<td>").text(userList[idx].reg_date);
 
-                    $tr.append($id);
-                    $tr.append($pwd);
-                    $tr.append($name);
-                    $tr.append($level);
-                    $tr.append($description);
-                    $tr.append($reg_date);
+                    tr.append(id);
+                    tr.append(pwd);
+                    tr.append(name);
+                    tr.append(level);
+                    tr.append(description);
+                    tr.append(reg_date);
 
-                    $table.append($tr);
+                    table.append(tr);
 
                 }
             },
@@ -175,7 +174,7 @@
     // 업로드 파일 null 경우 alert
     function onSubmit(){
 
-        if($("#dbFile").val() == "" || $("#dbFile").val() == null){
+        if($(".dbFile").val() === ""){
             alert("파일을 업로드해주세요.");
             return false;
         }

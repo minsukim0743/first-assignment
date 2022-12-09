@@ -7,12 +7,16 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <resources mapping="/resources/**" location="/resources/" />
+
+    <!-- View prefix, suffix 지정 @Controller에서 View 리턴시 적용-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".jsp" />
         <beans:property name="contentType" value="text/html; charset=UTF-8" />
     </beans:bean>
 
+    <!-- 자바 공통파일 패키지 지정
+        빈으로 등록 될 준비를 마친 클래스들을 스캔하여, 빈으로 등록해주는 것-->
     <context:component-scan base-package="com.example.demo" />
 
     <annotation-driven />

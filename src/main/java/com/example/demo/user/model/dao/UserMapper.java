@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    // userList 조회
     List<UserDTO> selectUserList();
 
     void insertUserList(UserDTO user);

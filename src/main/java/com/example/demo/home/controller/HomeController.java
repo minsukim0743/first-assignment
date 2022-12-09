@@ -28,7 +28,7 @@ public class HomeController {
         this.userService = userService;
     }
 
-    // 
+    // 시작 페이지 설정
     @GetMapping("/")
     public String home() {
 
@@ -40,26 +40,32 @@ public class HomeController {
     @ResponseBody
     public String selectUserList(){
 
+        // Gson 날짜 데이터 변경하기
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
 
+        // userList 조회
         List<UserDTO> userList = userService.selectUserList();
         System.out.println("userList 확인 : " + userList);
 
         return gson.toJson(userList);
     }
 
+    // DBFILE 확장자 파일 업로드 시 text 내용 DB에 저장
     @PostMapping("/insert")
     public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
 
-            Map<Integer, String> file = userService.insertUserList(dbFile);
+        // 업로드 파일 Service에 전달
+        Map<Integer, String> file = userService.insertUserList(dbFile);
 
-            rttr.addFlashAttribute("successCount", userService.successCount);
-            rttr.addFlashAttribute("failCount", userService.failCount);
+        // successCount, failCount 값 넘겨주기
+        rttr.addFlashAttribute("successCount", userService.successCount);
+        rttr.addFlashAttribute("failCount", userService.failCount);
 
-            if(file != null){
+        // file 업로드 성공 시 file 값 넘겨주기
+        if(file != null){
 
-                rttr.addFlashAttribute("file", file);
-            }
+            rttr.addFlashAttribute("file", file);
+        }
 
         return "redirect:/";
     }
