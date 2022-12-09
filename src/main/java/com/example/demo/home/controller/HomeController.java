@@ -55,7 +55,7 @@ public class HomeController {
     public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
 
         // 업로드 파일 Service에 전달
-        Map<Integer, String> file = userService.insertUserList(dbFile);1
+        Map<Integer, String> file = userService.insertUserList(dbFile);
 
         // successCount, failCount 값 넘겨주기
         rttr.addFlashAttribute("successCount", userService.successCount);
