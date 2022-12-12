@@ -44,6 +44,8 @@ public class UserService implements UserServiceImpl{
         Map<Integer, String> fail = new HashMap<>();
         // 업로드 된 파일 읽기 위해 InputStream 안에 담기
         InputStream file = dbFile.getInputStream();
+        // 읽을 파일 변수에 담기
+        InputStreamReader isr = new InputStreamReader(file);
         // 라인번호 이력 남기기 위하여 AtomicInteger 사용 초기번호 1 설정
         AtomicInteger lineNumber = new AtomicInteger(1);
 
@@ -51,9 +53,8 @@ public class UserService implements UserServiceImpl{
         this.successCount = 0;
         this.failCount = 0;
 
-        // 업로드한 파일을 한줄씩 읽어 반복문을 돌려 split 을 통하여 배열로 만들어 UserDTO에 저장
-        new BufferedReader(new InputStreamReader(file)).lines().forEach(userInfo -> {
-            UserDTO user = new UserDTO(userInfo.split("/"));
+        // 업로드한 파일을 한줄씩 읽어 반복문을 돌려 split 을 통하여 배열로 만들어 오버로딩한 생성자 UserDTO에 저장
+        new BufferedReader(isr).lines().forEach(userInfo -> { UserDTO user = new UserDTO(userInfo.split("/"));
 
             try {
 
@@ -71,7 +72,7 @@ public class UserService implements UserServiceImpl{
             }
             finally {
 
-                // 메소드 끝날때 현재 값 리턴하고 변수에 + 1
+                // 메소드 끝날때 현재 값 리턴하고 lineNumber + 1
                 lineNumber.getAndIncrement();
             }
         });

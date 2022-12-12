@@ -98,7 +98,7 @@
             let table = $("#failArea tbody");
             table.html("");
 
-            const userList = file.replace("{", "").replace("}", "").split(", ");
+            let userList = file.replace("{", "").replace("}", "").split(", ");
 
             for(let idx in userList){
 
@@ -137,6 +137,7 @@
 
                 let userList = JSON.parse(data);
                 console.log(userList);
+
                 tableUserList.css("display", "block");
 
                 let table = $("#listArea tbody");

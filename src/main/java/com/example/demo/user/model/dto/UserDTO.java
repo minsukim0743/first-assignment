@@ -23,6 +23,7 @@ public class UserDTO {
         this.description = array[4];
         this.reg_date = Timestamp.valueOf(array[5]);
     }
+
     public UserDTO(String id, String pwd, String name, char level, String description, Timestamp reg_date) {
         this.id = id;
         this.pwd = pwd;
