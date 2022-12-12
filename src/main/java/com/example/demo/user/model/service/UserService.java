@@ -77,8 +77,7 @@ public class UserService implements UserServiceImpl{
             }
         });
 
-        // successCount(int) lineNumber(Integer) 여서 .intValue() 을 사용하여 int로 parsing
-        return successCount == lineNumber.intValue() ? null : fail;
+        return fail;
     }
 
 }

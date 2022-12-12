@@ -50,7 +50,7 @@ public class HomeController {
     }
 
     // DBFILE 확장자 파일 업로드 시 text 내용 DB에 저장
-    @PostMapping("/insert")
+    @PostMapping("/user")
     public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
 
         // 업로드 파일 Service에 전달

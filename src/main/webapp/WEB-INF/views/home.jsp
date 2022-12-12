@@ -16,7 +16,7 @@
 
             <h1>1차 과제</h1>
 
-            <form action="/insert" class="file-form" id="file-form" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
+            <form action="/user" class="file-form" id="file-form" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
                 <input type="file" name="dbFile" class="dbFile" accept=".dbfile" onchange="checkFile(this)"/><br>
                 <button type="submit" class="btn-file">Submit</button>
             </form>
@@ -66,6 +66,7 @@
 
             <button id="json" class="btn-json">조회하기</button>
             <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
+
         </div>
     </div>
 <script type="text/javascript">
