@@ -24,15 +24,6 @@ public class UserDTO {
         this.reg_date = Timestamp.valueOf(array[5]);
     }
 
-    public UserDTO(String id, String pwd, String name, char level, String description, Timestamp reg_date) {
-        this.id = id;
-        this.pwd = pwd;
-        this.name = name;
-        this.level = level;
-        this.description = description;
-        this.reg_date = reg_date;
-    }
-
     public String getId() {
         return id;
     }
