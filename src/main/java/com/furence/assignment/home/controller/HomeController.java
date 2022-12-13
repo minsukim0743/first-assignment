@@ -55,16 +55,13 @@ public class HomeController {
     public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
 
         // 업로드 파일 Service에 전달
-        InsertData fail = userService.insertUserList(dbFile);
-        System.out.println("fail : " + fail);
-
-        // failMap successCount, failCount 값 넘겨주기
-        rttr.addFlashAttribute("InsertData", fail);
+        InsertData file = userService.insertUserList(dbFile);
+        System.out.println("file : " + file);
 
         // file 업로드 성공 시 file 값 넘겨주기
-        if(fail != null){
+        if(file != null){
 
-            rttr.addFlashAttribute("fail", fail);
+            rttr.addFlashAttribute("file", file);
         }
 
         return "redirect:/";

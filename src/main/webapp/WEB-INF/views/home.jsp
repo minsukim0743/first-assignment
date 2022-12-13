@@ -32,8 +32,8 @@
                     </tr>
                     </thead>
                     <tr>
-                        <td style="padding: 15px 0 15px 0"><c:out value="${ InsertData.successCount }"/> 건</td>
-                        <td style="padding: 15px 0 15px 0"><c:out value="${ InsertData.failCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ file.successCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ file.failCount }"/> 건</td>
                     </tr>
                 </table>
             </div>
@@ -76,8 +76,8 @@
     </div>
 <script type="text/javascript">
 
-    const fail = '${fail}';
-    const failCount = '${InsertData.failCount}';
+    const file = '${file}';
+    const failCount = '${file.failCount}';
     const ajaxButton = $(".btn-json");
     const listArea = $(".listArea");
     const tableCount = $(".table-count");
@@ -96,8 +96,35 @@
     success_container.css("display", "none");
     fail_container.css("display", "none");
 
-    // 실패 카운트가 있을 시
-    if(fail.length > 0 && fail !== null){
+    // 문자열 Json 으로 바꿔주는 메소드
+    function failDataSet(){
+
+        let json = [];
+        let userList = file.replace("{", "").replace("}", "").split(", ");
+
+        for(let idx in userList){
+
+            let user = userList[idx].split("=");
+            console.log(user);
+
+            let userInfo = user[1].split("/");
+            console.log("userInfo : " + userInfo);
+
+            json.push({
+                "Fail Line" : user[0],
+                "id" : userInfo[0],
+                "pwd" : userInfo[1],
+                "name" : userInfo[2],
+                "level" : userInfo[3],
+                "description" : userInfo[4],
+                "reg_date" : userInfo[5],
+            })
+        }
+        return json;
+    };
+
+    // 실패
+    if(file.length > 0 && file !== null){
 
         if(failCount != 0){
 
@@ -119,7 +146,7 @@
             });
 
             // String 으로 넘어오는 문자열을 Json 형태로 바꿈
-            fail_table.data.parse(failDataSet(fail));
+            fail_table.data.parse(failDataSet(file));
 
             fileForm.css("display", "none")
             tableCount.css("display", "block");
@@ -131,33 +158,6 @@
             ajaxButton.css("display", "block");
             back.css("display", "block");
         }
-    };
-
-    // 문자열 Json 으로 바꿔주는 메소드
-    function failDataSet(){
-
-        let json = [];
-        let userList = fail.replace("{", "").replace("}", "").split(", ");
-
-        for(let idx in userList){
-
-            let user = userList[idx].split("=");
-            console.log(user);
-
-            let userInfo = user[1].split("/");
-            console.log("userInfo : " + userInfo);
-
-            json.push({
-                "Fail Line" : user[0],
-                "id" : userInfo[0],
-                "pwd" : userInfo[1],
-                "name" : userInfo[2],
-                "level" : userInfo[3],
-                "description" : userInfo[4],
-                "reg_date" : userInfo[5],
-            })
-        }
-        return json;
     };
 
     // if(fail.length > 0 && fail !== null){
@@ -199,7 +199,7 @@
     //     }
     // }
 
-    // 성공 Grid 테이블
+    // 성공
     let success_table = new dhx.Grid("success_container", {
         columns: [
             { id: "id", header: [{ text: "id" }] },

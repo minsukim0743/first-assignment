@@ -76,7 +76,6 @@ public class UserService implements UserServiceImpl{
                         fail.put(failLineNumber.get(), userInfo);
                         // 실패시 count + 1
                         failCount.getAndIncrement();
-
                     } finally {
 
                         // 메소드 끝날때 현재 값 리턴하고 + 1
