@@ -106,15 +106,16 @@
             // 실패 Grid 테이블
             let fail_table = new dhx.Grid("fail_container", {
                 columns: [
-                    { width: 65, id: "Fail Line", header: [{ text: "Fail Line" }] },
-                    { width: 50, id: "id", header: [{ text: "id" }] },
-                    { width: 50, id: "pwd", header: [{ text: "pwd" }] },
-                    { width: 70, id: "name", header: [{ text: "name" }] },
-                    { width: 45, id: "level", header: [{ text: "level" }] },
-                    { width: 105, id: "description", header: [{ text: "description" }] },
-                    { width: 170, id: "reg_date", header: [{ text: "reg_date" }] },
+                    { id: "Fail Line", header: [{ text: "Fail Line" }] },
+                    { id: "id", header: [{ text: "id" }] },
+                    { id: "pwd", header: [{ text: "pwd" }] },
+                    { id: "name", header: [{ text: "name" }] },
+                    { id: "level", header: [{ text: "level" }] },
+                    { id: "description", header: [{ text: "description" }] },
+                    { id: "reg_date", header: [{ text: "reg_date" }] },
                 ],
                 headerRowHeight: 50,
+                adjust: true,
             });
 
             // String 으로 넘어오는 문자열을 Json 형태로 바꿈
@@ -201,14 +202,15 @@
     // 성공 Grid 테이블
     let success_table = new dhx.Grid("success_container", {
         columns: [
-            { width: 50, id: "id", header: [{ text: "id" }] },
-            { width: 50, id: "pwd", header: [{ text: "pwd" }] },
-            { width: 70, id: "name", header: [{ text: "name" }] },
-            { width: 50, id: "level", header: [{ text: "level" }] },
-            { width: 148, id: "description", header: [{ text: "description" }] },
-            { width: 150, id: "reg_date", header: [{ text: "reg_date" }] },
+            { id: "id", header: [{ text: "id" }] },
+            { id: "pwd", header: [{ text: "pwd" }] },
+            { id: "name", header: [{ text: "name" }] },
+            { id: "level", header: [{ text: "level" }] },
+            { id: "description", header: [{ text: "description" }] },
+            { id: "reg_date", header: [{ text: "reg_date" }] },
         ],
         headerRowHeight: 50,
+        adjust: true,
     })
 
     // userList ajax 서버 요청
