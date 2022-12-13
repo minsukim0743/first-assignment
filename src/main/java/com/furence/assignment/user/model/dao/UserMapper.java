@@ -1,6 +1,6 @@
-package com.example.demo.user.model.dao;
+package com.furence.assignment.user.model.dao;
 
-import com.example.demo.user.model.dto.UserDTO;
+import com.furence.assignment.user.model.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

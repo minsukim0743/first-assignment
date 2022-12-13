@@ -42,5 +42,5 @@
     </beans:bean>
 
     <!-- 지정된 패키지의 모든 Mybatis관련 어노테이션을 찾아 처리함. -->
-    <mybatis-spring:scan base-package="com.example.demo.user.model.dao"/>
+    <mybatis-spring:scan base-package="com.furence.assignment.user.model.dao"/>
 </beans>

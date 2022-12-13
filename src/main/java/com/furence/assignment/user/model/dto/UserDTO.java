@@ -1,6 +1,5 @@
-package com.example.demo.user.model.dto;
+package com.furence.assignment.user.model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class UserDTO {

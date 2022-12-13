@@ -1,6 +1,6 @@
-package com.example.demo.user.model.service;
+package com.furence.assignment.user.model.service;
 
-import com.example.demo.user.model.dto.UserDTO;
+import com.furence.assignment.user.model.dto.UserDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

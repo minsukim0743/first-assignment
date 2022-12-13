@@ -7,7 +7,7 @@
     <!-- 원래는 resultType에 dto 경로를 풀로 작성해야 하지만
         typeAliases를 사용하여 dto에 별칭을 지정하여 resultType simple하게 작성 가능 -->
     <typeAliases>
-        <typeAlias alias="UserDTO" type="com.example.demo.user.model.dto.UserDTO"/>
+        <typeAlias alias="UserDTO" type="com.furence.assignment.user.model.dto.UserDTO"/>
     </typeAliases>
 
 </configuration>

@@ -1,7 +1,7 @@
-package com.example.demo.home.controller;
+package com.furence.assignment.home.controller;
 
-import com.example.demo.user.model.dto.UserDTO;
-import com.example.demo.user.model.service.UserService;
+import com.furence.assignment.user.model.dto.UserDTO;
+import com.furence.assignment.user.model.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
