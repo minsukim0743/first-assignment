@@ -96,20 +96,28 @@
     success_container.css("display", "none");
     fail_container.css("display", "none");
 
+    // 실패 카운트가 있을 시
     if(fail.length > 0 && fail !== null){
 
         if(failCount != 0){
 
             fail_container.css("display", "block");
 
+            // 실패 Grid 테이블
             let fail_table = new dhx.Grid("fail_container", {
                 columns: [
-                    { width: 70, id: "Fail Line", header: [{ text: "Fail Line" }] },
-                    { width: 448, id: "Fail Text", header: [{ text: "Fail Text" }] },
+                    { width: 65, id: "Fail Line", header: [{ text: "Fail Line" }] },
+                    { width: 50, id: "id", header: [{ text: "id" }] },
+                    { width: 50, id: "pwd", header: [{ text: "pwd" }] },
+                    { width: 70, id: "name", header: [{ text: "name" }] },
+                    { width: 45, id: "level", header: [{ text: "level" }] },
+                    { width: 105, id: "description", header: [{ text: "description" }] },
+                    { width: 170, id: "reg_date", header: [{ text: "reg_date" }] },
                 ],
                 headerRowHeight: 50,
             });
 
+            // String 으로 넘어오는 문자열을 Json 형태로 바꿈
             fail_table.data.parse(failDataSet(fail));
 
             fileForm.css("display", "none")
@@ -124,6 +132,7 @@
         }
     };
 
+    // 문자열 Json 으로 바꿔주는 메소드
     function failDataSet(){
 
         let json = [];
@@ -132,28 +141,23 @@
         for(let idx in userList){
 
             let user = userList[idx].split("=");
+            console.log(user);
+
+            let userInfo = user[1].split("/");
+            console.log("userInfo : " + userInfo);
 
             json.push({
                 "Fail Line" : user[0],
-                "Fail Text" : user[1],
+                "id" : userInfo[0],
+                "pwd" : userInfo[1],
+                "name" : userInfo[2],
+                "level" : userInfo[3],
+                "description" : userInfo[4],
+                "reg_date" : userInfo[5],
             })
         }
-
         return json;
     };
-
-    let success_table = new dhx.Grid("success_container", {
-        columns: [
-            { width: 50, id: "id", header: [{ text: "id" }] },
-            { width: 50, id: "pwd", header: [{ text: "pwd" }] },
-            { width: 70, id: "name", header: [{ text: "name" }] },
-            { width: 50, id: "level", header: [{ text: "level" }] },
-            { width: 148, id: "description", header: [{ text: "description" }] },
-            { width: 150, id: "reg_date", header: [{ text: "reg_date" }] },
-        ],
-
-        headerRowHeight: 50,
-    })
 
     // if(fail.length > 0 && fail !== null){
     //
@@ -193,6 +197,19 @@
     //         back.css("display", "block");
     //     }
     // }
+
+    // 성공 Grid 테이블
+    let success_table = new dhx.Grid("success_container", {
+        columns: [
+            { width: 50, id: "id", header: [{ text: "id" }] },
+            { width: 50, id: "pwd", header: [{ text: "pwd" }] },
+            { width: 70, id: "name", header: [{ text: "name" }] },
+            { width: 50, id: "level", header: [{ text: "level" }] },
+            { width: 148, id: "description", header: [{ text: "description" }] },
+            { width: 150, id: "reg_date", header: [{ text: "reg_date" }] },
+        ],
+        headerRowHeight: 50,
+    })
 
     // userList ajax 서버 요청
     $(ajaxButton).click(function(){
