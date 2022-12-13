@@ -1,5 +1,6 @@
 package com.furence.assignment.user.model.service;
 
+import com.furence.assignment.user.model.dto.InsertData;
 import com.furence.assignment.user.model.dto.UserDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,5 +11,5 @@ import java.util.Map;
 public interface UserServiceImpl {
     List<UserDTO> selectUserList();
 
-    Map<Integer, String> insertUserList(MultipartFile dbFile) throws IOException;
+    InsertData insertUserList(MultipartFile dbFile) throws IOException;
 }

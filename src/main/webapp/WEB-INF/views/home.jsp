@@ -32,8 +32,8 @@
                     </tr>
                     </thead>
                     <tr>
-                        <td style="padding: 15px 0 15px 0"><c:out value="${ successCount }"/> 건</td>
-                        <td style="padding: 15px 0 15px 0"><c:out value="${ failCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ InsertData.successCount }"/> 건</td>
+                        <td style="padding: 15px 0 15px 0"><c:out value="${ InsertData.failCount }"/> 건</td>
                     </tr>
                 </table>
             </div>
@@ -77,7 +77,7 @@
 <script type="text/javascript">
 
     const fail = '${fail}';
-    const failCount = '${failCount}';
+    const failCount = '${InsertData.failCount}';
     const ajaxButton = $(".btn-json");
     const listArea = $(".listArea");
     const tableCount = $(".table-count");

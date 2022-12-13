@@ -1,5 +1,6 @@
 package com.furence.assignment.home.controller;
 
+import com.furence.assignment.user.model.dto.InsertData;
 import com.furence.assignment.user.model.dto.UserDTO;
 import com.furence.assignment.user.model.service.UserService;
 import com.google.gson.Gson;
@@ -54,12 +55,11 @@ public class HomeController {
     public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
 
         // 업로드 파일 Service에 전달
-        Map<Integer, String> fail = userService.insertUserList(dbFile);
+        InsertData fail = userService.insertUserList(dbFile);
         System.out.println("fail : " + fail);
 
-        // successCount, failCount 값 넘겨주기
-        rttr.addFlashAttribute("successCount", userService.successCount);
-        rttr.addFlashAttribute("failCount", userService.failCount);
+        // failMap successCount, failCount 값 넘겨주기
+        rttr.addFlashAttribute("InsertData", fail);
 
         // file 업로드 성공 시 file 값 넘겨주기
         if(fail != null){
