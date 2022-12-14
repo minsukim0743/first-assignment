@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -38,7 +37,7 @@ public class HomeController {
     // userList ajax 요청 메소드
     @GetMapping(value = "/user", produces = "application/text; charset=UTF-8")
     @ResponseBody
-    public String selectUserList(){
+    public String selectUserList() {
 
         // Gson 날짜 데이터 변경하기
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
@@ -52,14 +51,14 @@ public class HomeController {
 
     // DBFILE 확장자 파일 업로드 시 text 내용 DB에 저장
     @PostMapping("/user")
-    public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) throws IOException {
+    public String insertUser(MultipartFile dbFile, RedirectAttributes rttr) {
 
         // 업로드 파일 Service에 전달
         InsertData file = userService.insertUserList(dbFile);
         System.out.println("file : " + file);
 
         // file 업로드 성공 시 file 값 넘겨주기
-        if(file != null){
+        if (file != null) {
 
             rttr.addFlashAttribute("file", file);
         }

@@ -1,9 +1,5 @@
 package com.furence.assignment.user.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 

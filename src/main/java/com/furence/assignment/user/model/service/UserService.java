@@ -1,5 +1,6 @@
 package com.furence.assignment.user.model.service;
 
+import com.furence.assignment.common.SelectCriteria;
 import com.furence.assignment.user.model.dao.UserMapper;
 import com.furence.assignment.user.model.dto.InsertData;
 import com.furence.assignment.user.model.dto.UserDTO;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class UserService implements UserServiceImpl{
+public class UserService implements UserServiceImpl {
 
     private final UserMapper userMapper;
 
@@ -31,6 +32,8 @@ public class UserService implements UserServiceImpl{
         // userList 조회
         List<UserDTO> userList = userMapper.selectUserList();
 
+        System.out.println("userList : " + userList);
+
         return userList;
     }
 
@@ -41,7 +44,7 @@ public class UserService implements UserServiceImpl{
 
         // 실패 정보를 조회하기 위해 Map 객체 생성
         Map<Integer, String> fail = new HashMap<>();
-        
+
         // 성공, 실패 개수 변수
         AtomicInteger successCount = new AtomicInteger();
         AtomicInteger failCount = new AtomicInteger();
@@ -52,6 +55,8 @@ public class UserService implements UserServiceImpl{
         String fileName = dbFile.getName();
         String ext = fileName.toLowerCase().substring(fileName.lastIndexOf(".") + 1);
 
+        System.out.println("확장자 체크 : " + ext);
+
         if (ext.equals("dbfile")) {
 
             try (
@@ -61,12 +66,13 @@ public class UserService implements UserServiceImpl{
                     InputStreamReader isr = new InputStreamReader(is);
                     BufferedReader br = new BufferedReader(isr)) {
 
-                    // 업로드한 파일을 한줄씩 읽어 반복문을 돌려 split 을 통하여 배열로 만들어 오버로딩한 생성자 UserDTO에 저장
-                    br.lines().forEach(userInfo -> { UserDTO user = new UserDTO(userInfo.split("/"));
+                // 업로드한 파일을 한줄씩 읽어 반복문을 돌려 split 을 통하여 배열로 만들어 오버로딩한 생성자 UserDTO에 저장
+                br.lines().forEach(userInfo -> {
+                    UserDTO user = new UserDTO(userInfo.split("/"));
 
                     try {
 
-                        // 성공시 user정보를 담아 넘김
+                        // 성공시 user 정보를 담아 넘김
                         userMapper.insertUserList(user);
                         // 성공시 count + 1
                         successCount.getAndIncrement();
@@ -89,5 +95,20 @@ public class UserService implements UserServiceImpl{
 
         return new InsertData(fail, successCount, failCount);
     }
+
+    // 테이블 전체 행 개수 조회
+    @Override
+    public int selectTotalCount() {
+
+        return userMapper.selectTotalCount();
+    }
+
+    // Server Paging 조회
+    @Override
+    public List<UserDTO> selectUser(SelectCriteria selectCriteria) {
+
+        return userMapper.selectUser(selectCriteria);
+    }
+
 
 }

@@ -17,7 +17,12 @@
     <!-- 유저 리스트 조회 -->
     <select id="selectUserList" resultMap="userResultMap">
         SELECT
-               *
+               ID
+             , PWD
+             , NAME
+             , LEVEL
+             , DESCRIPTION
+             , REG_DATE
           FROM T_USER
     </select>
 
@@ -26,12 +31,12 @@
         INSERT
           INTO T_USER
         (
-          ID
-        , PWD
-        , NAME
-        , LEVEL
-        , DESCRIPTION
-        , REG_DATE
+           ID
+         , PWD
+         , NAME
+         , LEVEL
+         , DESCRIPTION
+         , REG_DATE
         )
         VALUES
         (
@@ -43,4 +48,24 @@
         , #{ reg_date }
         )
     </insert>
+
+    <select id="selectTotalCount" resultType="_int">
+        SELECT
+               COUNT(*)
+          FROM T_USER
+    </select>
+
+    <select id="selectUser" resultMap="userResultMap">
+        SELECT
+               ID
+             , PWD
+             , NAME
+             , LEVEL
+             , DESCRIPTION
+             , REG_DATE
+          FROM T_USER
+         ORDER BY LEVEL ASC
+         LIMIT #{ limit } OFFSET #{ startRow }
+    </select>
+
 </mapper>
