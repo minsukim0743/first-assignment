@@ -16,7 +16,7 @@
 <div class="form">
     <div class="assignment-form">
 
-        <h1>1차 과제</h1>
+        <h1>Furence 과제</h1>
 
         <form action="/user" class="file-form" id="file-form" method="post" enctype="multipart/form-data"
               onsubmit="return onSubmit()">

@@ -26,7 +26,7 @@ public class Pagenation {
             endPage = maxPage;
         }
 
-        // 행이 아무 것도 존재하지 않으면 maxPage, endPage 0
+        // 행이 아무 것도 존재하지 않으면 startPage를 보여줌
         if (maxPage == 0 && endPage == 0) {
             maxPage = startPage;
             endPage = startPage;

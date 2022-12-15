@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -25,30 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/serverPaging")
-    public String serverPaging(Model model, HttpServletRequest request) {
-
-        // 현재 페이지 인덱스 가져오기
-        String currentPage = request.getParameter("currentPage");
-        int pageNo = 1;
-
-        if (currentPage != null && !"".equals(currentPage)) {
-            pageNo = Integer.parseInt(currentPage);
-        }
-
-        // 테이블 전체 행 개수 조회
-        int totalCount = userService.selectTotalCount();
-
-        SelectCriteria selectCriteria = null;
-        selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount);
-
-        System.out.println(selectCriteria);
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
-
-        List<UserDTO> userList = userService.selectUser(selectCriteria);
-
-        model.addAttribute("userList", gson.toJson(userList));
-        model.addAttribute("selectCriteria", selectCriteria);
+    public String serverPaging() {
 
         return "serverPaging";
     }
@@ -63,5 +43,36 @@ public class UserController {
         model.addAttribute("userList", gson.toJson(userList));
 
         return "dhtmlxPaging";
+    }
+
+    @GetMapping(value = "/user/{pageNo}", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public Object serverPagingAjax(@PathVariable int pageNo, HttpServletRequest request){
+
+        String currentPage = request.getParameter("currentPage");
+
+        if (currentPage != null && !"".equals(currentPage)) {
+            pageNo = Integer.parseInt(currentPage);
+        }
+
+        // 테이블 전체 행 개수 조회
+        int totalCount = userService.selectTotalCount();
+
+        SelectCriteria selectCriteria = null;
+        selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount);
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+
+        List<UserDTO> userList = userService.selectUser(selectCriteria);
+
+        HashMap<String, Object> pageData = new HashMap<>();
+
+        System.out.println("userList : " + userList);
+        System.out.println("selectCriteria : " + selectCriteria);
+
+        pageData.put("userList", userList);
+        pageData.put("selectCriteria", selectCriteria);
+
+        return gson.toJson(pageData);
     }
 }

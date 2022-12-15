@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserService implements UserServiceImpl {
 
     private final UserMapper userMapper;
+    final String DBFILE = "dbfile";
 
     @Autowired
     public UserService(UserMapper userMapper) {
@@ -57,7 +58,7 @@ public class UserService implements UserServiceImpl {
 
         System.out.println("확장자 체크 : " + ext);
 
-        if (ext.equals("dbfile")) {
+        if (ext.equals(DBFILE)) {
 
             try (
                     // 업로드 된 파일 읽기 위해 InputStream 안에 담기

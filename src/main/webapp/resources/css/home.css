@@ -2,7 +2,7 @@
 
 .form {
     width: 100vw;
-    min-height: 100vh;
+    min-height: 105vh;
     background-color: #f3f2f1;
     position: relative;
 }
@@ -21,13 +21,13 @@
 }
 
 .form h1 {
-    font-size: 40px;
+    font-size: 25px;
     font-weight: 200;
     letter-spacing: 10px;
-    padding: 0px 0px 40px 175px;
+    padding: 0px 0px 40px 160px;
 }
 
-.btn-file, .btn-json{
+.btn-file, .btn-json, .btn-ajax{
     margin-top: 10px;
     width: 99.6%;
     padding: 12px 0;
@@ -52,7 +52,7 @@
     transition: all .3s;
 }
 
-.btn-file:hover, .btn-serverPaging:hover, .btn-dhtmlxPaging:hover {
+.btn-file:hover, .btn-serverPaging:hover, .btn-dhtmlxPaging:hover, .btn-ajax:hover {
     background-color: #fff;
     color: #2b333f;
 }
@@ -66,11 +66,28 @@ td, tr{
 }
 
 .btn-back {
-    padding: 30px 0 0 468px;
+    padding: 0 0 0 468px;
 }
 
 #gridbox {
 
     height: 370px !important;
     width: 526px !important;
+}
+
+#startPage, #prevPage, #nextPage, #maxPage, #pageNum{
+
+    cursor : pointer;
+    display: inline-block;
+}
+
+#pageNum > div {
+
+    display : inline-block;
+    padding: 20px 8px 0 8px
+}
+
+.bold{
+
+    color : red;
 }

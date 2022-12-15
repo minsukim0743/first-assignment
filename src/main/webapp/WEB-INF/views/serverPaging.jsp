@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../resources/css/home.css">
     <link rel="stylesheet" type="text/css" href="../../resources/codebase/grid.css">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="../../resources/codebase/grid.js" type="text/javascript"></script>
 </head>
 <body>
@@ -19,51 +20,28 @@
         <h2 style="text-align: center; padding-bottom: 30px">Server Paging</h2>
 
         <div id="success_container" style="height:452px; max-width:100%"></div>
+
         <div class="pagingArea" align="center">
-
-            <!-- 맨 앞으로 이동 버튼 -->
-            <button id="startPage" class="btn btn-default"><<</button>
-
-            <!-- 이전 페이지 버튼 -->
-            <c:if test="${ selectCriteria.pageNo <= 1 }">
-                <button disabled class="btn btn-default"> <</button>
-            </c:if>
-            <c:if test="${ selectCriteria.pageNo > 1 }">
-                <button id="prevPage" class="btn btn-default"> <</button>
-            </c:if>
-
-            <!-- 숫자 버튼 -->
-            <c:forEach var="p" begin="${ selectCriteria.startPage }" end="${ selectCriteria.endPage }" step="1">
-                <c:if test="${ selectCriteria.pageNo eq p }">
-                    <button disabled class="btn btn-default"><c:out value="${ p }"/></button>
-                </c:if>
-                <c:if test="${ selectCriteria.pageNo ne p }">
-                    <button onclick="pageButtonAction(this.innerText);" style="padding: 20px 8px 0 8px"><c:out
-                            value="${ p }"/></button>
-                </c:if>
-            </c:forEach>
-
-            <!-- 다음 페이지 버튼 -->
-            <c:if test="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
-                <button disabled class="btn btn-default">></button>
-            </c:if>
-            <c:if test="${ selectCriteria.pageNo < selectCriteria.maxPage }">
-                <button id="nextPage" class="btn btn-default"> ></button>
-            </c:if>
-
-            <!-- 마지막 페이지로 이동 버튼 -->
-            <button id="maxPage" class="btn btn-default"> >></button>
-
+            <div id="startPage"><<</div>
+            <div id="prevPage"> <</div>
+            <div id="pageNum"></div>
+            <div id="nextPage"> ></div>
+            <div id="maxPage"> >></div>
         </div>
 
         <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
+
     </div>
 </div>
 </body>
-<script type="text/javascript">
+<script>
 
-    const userList = ${userList};
-    const link = "/serverPaging";
+    const startPage = $("#startPage");
+    const prevPage = $("#prevPage");
+    const nextPage = $("#nextPage");
+    const maxPage = $("#maxPage");
+    let pageNum = $("#pageNum");
+    let selectCriteria = null;
 
     let success_table = new dhx.Grid("success_container", {
         columns: [
@@ -76,39 +54,74 @@
         ],
         headerRowHeight: 50,
         adjust: true,
-        data: userList,
     });
 
-    if (document.getElementById("startPage")) {
-        const startPage = document.getElementById("startPage");
-        startPage.onclick = function () {
-            location.href = link + "?currentPage=1";
-        }
-    }
+    function dataList(pageNo) {
 
-    if (document.getElementById("prevPage")) {
-        const prevPage = document.getElementById("prevPage");
-        prevPage.onclick = function () {
-            location.href = link + "?currentPage=${ selectCriteria.pageNo - 1 }";
-        }
-    }
+        $.ajax({
 
-    if (document.getElementById("nextPage")) {
-        const nextPage = document.getElementById("nextPage");
-        nextPage.onclick = function () {
-            location.href = link + "?currentPage=${ selectCriteria.pageNo + 1 }";
-        }
-    }
+            url: "/user/" + pageNo,
+            type: "GET",
+            contentType: "application/json; charset:UTF-8",
 
-    if (document.getElementById("maxPage")) {
-        const maxPage = document.getElementById("maxPage");
-        maxPage.onclick = function () {
-            location.href = link + "?currentPage=${ selectCriteria.maxPage }";
-        }
-    }
+            success: function (data) {
 
-    function pageButtonAction(text) {
-        location.href = link + "?currentPage=" + text;
-    }
+                console.log(data);
+
+                const jsonData = JSON.parse(data);
+                success_table.data.parse(jsonData.userList);
+                selectCriteria = jsonData.selectCriteria;
+
+                let number = "";
+
+                for (let i = selectCriteria.startPage; i <= selectCriteria.endPage; i++) {
+
+                    if (i == selectCriteria.pageNo) {
+
+                        number += "<div class='bold'>" + i + "</div>";
+                    } else {
+
+                        number += "<div>" + i + "</div>";
+                    }
+                }
+
+                pageNum.html("");
+                pageNum.html(number);
+            }
+        });
+    };
+
+    $(document).ready(function () {
+        dataList(1);
+    });
+
+    $(document).on('click', '#pageNum > div', function () {
+
+        let num = $(this).html();
+
+        dataList(num);
+    })
+
+
+    $(startPage).click(function () {
+
+        dataList(1);
+    });
+
+    $(prevPage).click(function () {
+
+        dataList(Math.max(1, selectCriteria.pageNo - 1));
+    });
+
+    $(nextPage).click(function () {
+
+        dataList(Math.min(selectCriteria.pageNo + 1, selectCriteria.maxPage));
+    });
+
+    $(maxPage).click(function () {
+
+        dataList(selectCriteria.maxPage);
+    })
+
 </script>
 </html>

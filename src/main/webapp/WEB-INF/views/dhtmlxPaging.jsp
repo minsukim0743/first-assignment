@@ -34,7 +34,7 @@
     //the path to images required by grid
     mygrid.setHeader("id,pwd,name,level,description,reg_date");//the headers of columns
     mygrid.setInitWidths("60, 50, 70, 40, 90, 190");          //the widths of columns
-    mygrid.setColSorting("str,str,str,str,str,str");          //the sorting types
+    mygrid.setColSorting("str,str,str,str,str,date");          //the sorting types
     mygrid.enablePaging(true, 10, 5, "pagingArea", true, "recinfoArea");
     mygrid.setPagingSkin("bricks", "dhx_skyblue");
     mygrid.init();      //finishes initialization and renders the grid on the page
