@@ -9,8 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../../resources/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../../resources/css/home.css">
     <link rel="stylesheet" type="text/css" href="../../resources/dhtmlxSuite/codebase/dhtmlx.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/dhtmlxSuite/skins/skyblue/dhtmlx.css">
 
     <script src="../../resources/dhtmlxSuite/codebase/dhtmlx.js" type="text/javascript"></script>
+
 </head>
 <body>
 <div class="form">
@@ -21,6 +23,9 @@
         <div id="gridbox"></div>
         <div id="pagingArea"></div>
 
+        <button style="width: 530px;padding: 10px 0 10px 440px" onclick="mygrid.toExcel('https://dhtmlxgrid.appspot.com/export/excel');">
+            <img src="../../resources/images/excelImg.png"
+                 style="width: 40px; display: inline-block; float: right;">Excel Export</button>
         <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
     </div>
 </div>
@@ -32,11 +37,12 @@
 
     mygrid = new dhtmlXGridObject('gridbox');
     //the path to images required by grid
+    mygrid.setImagePath("../../resources/dhtmlxSuite/codebase/imgs/");
     mygrid.setHeader("id,pwd,name,level,description,reg_date");//the headers of columns
     mygrid.setInitWidths("60, 50, 70, 40, 90, 190");          //the widths of columns
     mygrid.setColSorting("str,str,str,str,str,date");          //the sorting types
     mygrid.enablePaging(true, 10, 5, "pagingArea", true, "recinfoArea");
-    mygrid.setPagingSkin("bricks", "dhx_skyblue");
+    mygrid.setPagingSkin("toolbar", "dhx_skyblue");
     mygrid.init();      //finishes initialization and renders the grid on the page
 
     console.log(userList);

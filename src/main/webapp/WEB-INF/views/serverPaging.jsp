@@ -12,6 +12,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="../../resources/codebase/grid.js" type="text/javascript"></script>
+
 </head>
 <body>
 <div class="form">
@@ -21,7 +22,7 @@
 
         <div id="success_container" style="height:452px; max-width:100%"></div>
 
-        <div class="pagingArea" align="center">
+        <div id="pagingArea" align="center">
             <div id="startPage"><<</div>
             <div id="prevPage"> <</div>
             <div id="pageNum"></div>
@@ -56,6 +57,7 @@
         adjust: true,
     });
 
+    // 데이터 조회 PageNo별로 Ajax 요청
     function dataList(pageNo) {
 
         $.ajax({
@@ -66,58 +68,64 @@
 
             success: function (data) {
 
-                console.log(data);
-
                 const jsonData = JSON.parse(data);
                 success_table.data.parse(jsonData.userList);
+                // 페이지 설정 정보 담겨있는 변수
                 selectCriteria = jsonData.selectCriteria;
 
                 let number = "";
+                pageNum.html("");
 
                 for (let i = selectCriteria.startPage; i <= selectCriteria.endPage; i++) {
 
                     if (i == selectCriteria.pageNo) {
 
-                        number += "<div class='bold'>" + i + "</div>";
+                        number = "<div class='bold'>" + i + "</div>";
                     } else {
 
-                        number += "<div>" + i + "</div>";
+                        number = "<div>" + i + "</div>";
                     }
+
+                    pageNum.append(number);
                 }
 
-                pageNum.html("");
-                pageNum.html(number);
             }
         });
     };
 
+    // 최초 실행
     $(document).ready(function () {
         dataList(1);
     });
 
+    // 페이지 Number 이동
     $(document).on('click', '#pageNum > div', function () {
 
-        let num = $(this).html();
+        // 클릭 해당 num text 반환
+        let num = $(this).text();
 
         dataList(num);
     })
 
-
+    // 시작페이지
     $(startPage).click(function () {
 
         dataList(1);
     });
 
+    // 전페이지
     $(prevPage).click(function () {
 
         dataList(Math.max(1, selectCriteria.pageNo - 1));
     });
 
+    // 다음 페이지
     $(nextPage).click(function () {
 
         dataList(Math.min(selectCriteria.pageNo + 1, selectCriteria.maxPage));
     });
 
+    // 마지막 페이지
     $(maxPage).click(function () {
 
         dataList(selectCriteria.maxPage);

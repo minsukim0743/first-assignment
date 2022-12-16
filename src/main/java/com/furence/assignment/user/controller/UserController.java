@@ -3,14 +3,17 @@ package com.furence.assignment.user.controller;
 import com.furence.assignment.common.Pagenation;
 import com.furence.assignment.common.SelectCriteria;
 import com.furence.assignment.user.model.dto.UserDTO;
+import com.furence.assignment.user.model.dto.UserResponseData;
 import com.furence.assignment.user.model.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +50,7 @@ public class UserController {
 
     @GetMapping(value = "/user/{pageNo}", produces = "application/text; charset=UTF-8")
     @ResponseBody
-    public Object serverPagingAjax(@PathVariable int pageNo, HttpServletRequest request){
+    public String serverPagingAjax(@PathVariable int pageNo, HttpServletRequest request){
 
         String currentPage = request.getParameter("currentPage");
 
@@ -65,14 +68,12 @@ public class UserController {
 
         List<UserDTO> userList = userService.selectUser(selectCriteria);
 
-        HashMap<String, Object> pageData = new HashMap<>();
+        System.out.println(userList);
+        System.out.println(selectCriteria);
 
-        System.out.println("userList : " + userList);
-        System.out.println("selectCriteria : " + selectCriteria);
+        UserResponseData userResponseData = new UserResponseData(userList, selectCriteria);
 
-        pageData.put("userList", userList);
-        pageData.put("selectCriteria", selectCriteria);
-
-        return gson.toJson(pageData);
+        return gson.toJson(userResponseData);
     }
+
 }
