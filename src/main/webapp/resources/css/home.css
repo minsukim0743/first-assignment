@@ -69,10 +69,10 @@ td, tr{
     padding: 20px 0 0 234px;
 }
 
-#gridbox {
+#gridbox, #success_container {
 
-    height: 370px !important;
-    width: 526px !important;
+    height: 300px !important;
+    width: 503px !important;
 }
 
 #startPage, #prevPage, #nextPage, #maxPage, #pageNum{
@@ -90,4 +90,9 @@ td, tr{
 .bold{
 
     color : red;
+}
+
+#pagingArea{
+
+    width : 503px;
 }

@@ -31,7 +31,13 @@ public class UserController {
     }
 
     @GetMapping("/serverPaging")
-    public String serverPaging() {
+    public String serverPaging(Model model) {
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+
+        List<UserDTO> userList = userService.selectUserList();
+
+        model.addAttribute("userList", gson.toJson(userList));
 
         return "serverPaging";
     }
