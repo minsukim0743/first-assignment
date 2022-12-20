@@ -1,14 +1,7 @@
 package com.furence.assignment.user.model.dto;
 
-import com.furence.assignment.common.Pagenation;
 import com.furence.assignment.common.SelectCriteria;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.List;
-
 
 public class UserResponseData extends ResponseData{
 

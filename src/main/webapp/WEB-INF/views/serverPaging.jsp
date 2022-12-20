@@ -21,14 +21,7 @@
         <h2 style="text-align: center; padding-bottom: 30px">Server Paging</h2>
 
         <div id="success_container" style="height:452px; max-width:100%"></div>
-
-        <div id="pagingArea" align="center">
-            <div id="startPage"><<</div>
-            <div id="prevPage"> <</div>
-            <div id="pageNum"></div>
-            <div id="nextPage"> ></div>
-            <div id="maxPage"> >></div>
-        </div>
+        <div id="pagingArea" align="center"></div>
 
         <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
 
@@ -37,13 +30,8 @@
 </body>
 <script>
 
-    const userList = ${userList};
-
-    const startPage = $("#startPage");
-    const prevPage = $("#prevPage");
-    const nextPage = $("#nextPage");
-    const maxPage = $("#maxPage");
     let selectCriteria = null;
+    let userList = null;
 
     mygrid = new dhtmlXGridObject('success_container');
     pagetoolbar = new dhtmlXToolbarObject('pagingArea', 'dhx_skyblue');
@@ -61,37 +49,37 @@
 
             url: "/user/" + pageNo,
             type: "GET",
-            contentType: "application/json; charset:UTF-8",
+            contentType: "application/text; charset:UTF-8",
 
             success: function (data) {
 
                 const jsonData = JSON.parse(data);
                 mygrid.clearAll();
 
-                const user = {
+                const users = {
                     rows: []
                 };
 
                 // 페이지 설정 정보 담겨있는 변수
                 selectCriteria = jsonData.selectCriteria;
+                userList = jsonData.userList;
 
-                for (let idx in jsonData.userList) {
+                for (let idx in userList) {
 
-                    user.rows.push({
+                    users.rows.push({
                         id: idx,
-                        data: [jsonData.userList[idx].id, jsonData.userList[idx].pwd, jsonData.userList[idx].name, jsonData.userList[idx].level, jsonData.userList[idx].description, jsonData.userList[idx].reg_date]
+                        data: [userList[idx].id, userList[idx].pwd, userList[idx].name, userList[idx].level,
+                            userList[idx].description, userList[idx].reg_date]
                     })
                 };
 
-                mygrid.parse(user,"json");
-                refreshButtons(selectCriteria);
-
-                console.log(user);
+                mygrid.parse(users, "json");
+                addButtons(selectCriteria);
             }
         });
     };
 
-    function refreshButtons(selectCriteria){
+    function addButtons(selectCriteria) {
 
         let idx = 0;
         pagetoolbar.clearAll();
@@ -108,7 +96,7 @@
         // 숫자 버튼 생성
         for (let i = selectCriteria.startPage; i <= selectCriteria.endPage; i++) {
             pagetoolbar.addButton(i, idx++, i, null, null);
-            // 현재 페이지 강조 버튼
+            // 현재 페이지 강조
             if (i === selectCriteria.pageNo) {
                 pagetoolbar.disableItem(i);
             }
@@ -124,7 +112,7 @@
         };
 
         // Exccel Export 버튼 생성
-        pagetoolbar.addButton('Excel Export', idx++, 'Excel Export', null, null);
+        pagetoolbar.addButton('ExcelExport', idx++, 'Excel Export', null, null);
     };
 
     // 최초 실행
@@ -132,35 +120,34 @@
         dataList(1);
     });
 
-    pagetoolbar.attachEvent("onClick", function(id){
+    pagetoolbar.attachEvent("onClick", function (id) {
 
-        if(id == 'startPage'){
+        if (id == 'startPage') {
 
             // 시작 페이지
             dataList(1);
-            refreshButtons();
-        } else if(id == 'prevPage'){
+            addButtons();
+        } else if (id == 'prevPage') {
 
             // 전 페이지
             dataList(Math.max(1, selectCriteria.pageNo - 1));
-        } else if(id == 'nextPage'){
+        } else if (id == 'nextPage') {
 
             // 다음 페이지
             dataList(Math.min(selectCriteria.pageNo + 1, selectCriteria.maxPage));
-        } else if(id == 'maxPage'){
+        } else if (id == 'maxPage') {
 
             // 마지막 페이지
             dataList(selectCriteria.maxPage);
-        } else if(id == 'Excel Export'){
+        } else if (id == 'ExcelExport') {
 
             // Excel download
-            mygrid.toExcel('https://dhtmlxgrid.appspot.com/export/excel');
+            window.open("/excel");
         } else {
 
             // Number 페이지
             dataList(id);
         }
-
     });
 
 </script>

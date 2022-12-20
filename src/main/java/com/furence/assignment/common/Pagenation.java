@@ -2,7 +2,7 @@ package com.furence.assignment.common;
 
 public class Pagenation {
 
-    public static SelectCriteria getSelectCriteria(int pageNo, int totalCount) {
+    public SelectCriteria getSelectCriteria(int pageNo, int totalCount) {
 
         int maxPage;            // 전체 페이지에서 가장 마지막 페이지
         int startPage;            // 한번에 표시될 페이지 버튼의 시작할 페이지
@@ -36,11 +36,19 @@ public class Pagenation {
         startRow = (pageNo - 1) * limit + 1;
         endRow = startRow + limit - 1;
 
-        SelectCriteria selectCriteria = new SelectCriteria(pageNo, totalCount, limit, buttonAmount, maxPage, startPage, endPage, startRow, endRow);
+        SelectCriteria selectCriteria = SelectCriteria.builder()
+                .pageNo(pageNo)
+                .totalCount(totalCount)
+                .limit(limit)
+                .buttonAmount(buttonAmount)
+                .maxPage(maxPage)
+                .startPage(startPage)
+                .endPage(endPage)
+                .startRow(startRow)
+                .endRow(endRow)
+                .build();
 
         return selectCriteria;
     }
-
-
 
 }
