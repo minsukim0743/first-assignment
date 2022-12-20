@@ -102,9 +102,11 @@ public class UserController {
         for(UserDTO user : userList){
 
             Row row = sheet.createRow(rowNo++);
-            // 문자로 저장된 숫자 포맷
+            // String to int
             int pwd = Integer.parseInt(user.getPwd());
+            // char to String
             String level = String.valueOf(user.getLevel());
+            // Date format
             String regDate = simpleDateFormat.format(user.getReg_date());
 
             row.createCell(0).setCellValue(user.getId());

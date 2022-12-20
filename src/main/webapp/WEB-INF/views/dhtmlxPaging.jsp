@@ -24,9 +24,8 @@
         <div id="gridbox"></div>
         <div id="pagingArea"></div>
 
-        <button id="btn-excel" style="width: 530px;padding: 10px 0 10px 440px" onclick="mygrid.toExcel('https://dhtmlxgrid.appspot.com/export/excel');">
-            <img src="../../resources/images/excelImg.png"
-                 style="width: 40px; display: inline-block; float: right;">Excel Export</button>
+        <button id="btn-excel" style="width: 530px;padding: 10px 0 10px 440px"><img src="../../resources/images/excelImg.png"
+                                                                                    style="width: 40px; display: inline-block; float: right;">Excel Export</button>
         <button class="btn-back" onclick="location.href='/'">뒤로가기</button>
     </div>
 </div>
@@ -62,5 +61,9 @@
 
     mygrid.parse(user, "json");
 
+    $("#btn-excel").click(function(){
+
+        window.open("/excel");
+    })
 </script>
 </html>
